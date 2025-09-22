@@ -1,0 +1,39 @@
+name: frontend
+description: "Frontend for the Globe DB showcase app."
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.9.0
+
+dependencies:
+  common:
+    path: ../../packages/common
+  dart_mappable: ^4.6.0
+  flutter:
+    sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
+  google_fonts: ^6.2.1
+  flutter_svg: ^2.0.10+1
+  flutter_riverpod: ^3.0.0
+  riverpod: ^3.0.0
+  http: ^1.1.0
+  url_launcher: ^6.2.2
+  native_storage: ^0.3.0
+  flutter_quill: ^11.4.2
+  go_router: ^14.2.7
+  flutter_launcher_icons: ^0.14.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/icons/
