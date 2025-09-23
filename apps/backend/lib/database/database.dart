@@ -13,6 +13,6 @@ class AppDatabase extends _$AppDatabase {
   int get schemaVersion => 1;
 
   static QueryExecutor _openConnection() {
-    return NativeDatabase.opened(sqlite3.open('mealy-tomatillo.db'));
+    return NativeDatabase.opened(sqlite3.open('juvenile-grandson.db'));
   }
 }

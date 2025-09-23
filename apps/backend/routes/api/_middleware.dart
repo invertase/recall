@@ -5,10 +5,7 @@ import 'package:dart_frog_auth/dart_frog_auth.dart';
 Handler middleware(Handler handler) {
   return handler.use(
     bearerAuthentication<String>(
-      authenticator: (
-        RequestContext context,
-        String token,
-      ) async {
+      authenticator: (RequestContext context, String token) async {
         final jwtService = context.read<JwtService>();
 
         return jwtService.authenticateFromToken(token);

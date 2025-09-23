@@ -165,7 +165,6 @@ class BackspaceListAction extends Action<BackspaceListIntent> {
 
   @override
   Object? invoke(BackspaceListIntent intent) {
-    print(intent);
     final selection = controller.selection;
 
     // Check if the cursor is not selecting a range of text
@@ -188,7 +187,7 @@ class BackspaceListAction extends Action<BackspaceListIntent> {
     final isList =
         style.containsKey(Attribute.ul.key) ||
         style.containsKey(Attribute.ol.key);
-
+    print(isList);
     if (isList) {
       // It IS an empty list item, so we handle it.
       Attribute? listAttribute = style.containsKey(Attribute.ul.key)

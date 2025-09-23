@@ -12,9 +12,9 @@ class AuthHandler {
     required DriftUserRepository userRepository,
     required OAuthService oauthService,
     required JwtService jwtService,
-  })  : _userRepository = userRepository,
-        _oauthService = oauthService,
-        _jwtService = jwtService;
+  }) : _userRepository = userRepository,
+       _oauthService = oauthService,
+       _jwtService = jwtService;
 
   final OAuthService _oauthService;
   final DriftUserRepository _userRepository;
@@ -64,8 +64,9 @@ class AuthHandler {
       }
 
       final oauthData = await _oauthService.authenticateWithGoogle(code);
-      final existingUser =
-          await _userRepository.getUserByEmail(oauthData.email);
+      final existingUser = await _userRepository.getUserByEmail(
+        oauthData.email,
+      );
 
       User user;
 
@@ -101,8 +102,9 @@ class AuthHandler {
       }
 
       final oauthData = await _oauthService.authenticateWithGitHub(code);
-      final existingUser =
-          await _userRepository.getUserByEmail(oauthData.email);
+      final existingUser = await _userRepository.getUserByEmail(
+        oauthData.email,
+      );
 
       User user;
 
@@ -129,10 +131,7 @@ class AuthHandler {
     }
   }
 
-  Future<Response> getCurrentUser(
-    Request request,
-    String userId,
-  ) async {
+  Future<Response> getCurrentUser(Request request, String userId) async {
     try {
       final user = await _userRepository.getUserById(userId);
 
@@ -157,17 +156,17 @@ class AuthHandler {
   }
 
   Response _handleTokenRedirect(String token) {
-    final redirectUrl = Uri.parse(Environment.clientUrl).replace(
-      queryParameters: {'token': token},
-    );
+    final redirectUrl = Uri.parse(
+      Environment.clientUrl,
+    ).replace(queryParameters: {'token': token});
 
     return AppResponse.found(redirectUri: redirectUrl);
   }
 
   Response _handleErrorRedirect(String error) {
-    final redirectUrl = Uri.parse(Environment.clientUrl).replace(
-      queryParameters: {'error': Uri.encodeComponent(error)},
-    );
+    final redirectUrl = Uri.parse(
+      Environment.clientUrl,
+    ).replace(queryParameters: {'error': Uri.encodeComponent(error)});
 
     return AppResponse.found(redirectUri: redirectUrl);
   }

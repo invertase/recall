@@ -8,9 +8,7 @@ import 'package:http/http.dart';
 import 'package:uuid/uuid.dart';
 
 class OAuthService {
-  const OAuthService({
-    required Client httpClient,
-  }) : _client = httpClient;
+  const OAuthService({required Client httpClient}) : _client = httpClient;
 
   final Client _client;
 
@@ -23,10 +21,7 @@ class OAuthService {
       'state': state,
     });
 
-    return {
-      'url': uri.toString(),
-      'state': state,
-    };
+    return {'url': uri.toString(), 'state': state};
   }
 
   Map<String, String> getGoogleAuthUrl() {
@@ -39,10 +34,7 @@ class OAuthService {
       'state': state,
     });
 
-    return {
-      'url': uri.toString(),
-      'state': state,
-    };
+    return {'url': uri.toString(), 'state': state};
   }
 
   Future<OAuthData> authenticateWithGoogle(String code) async {
@@ -108,6 +100,7 @@ class OAuthService {
           'client_id': Environment.githubClientId,
           'client_secret': Environment.githubClientSecret,
           'code': code,
+          'redirect_uri': '${Environment.baseUrl}/auth/github/callback',
         },
       );
 
@@ -174,8 +167,8 @@ class OAuthService {
 
     final emailsData = jsonDecode(emailsResponse.body) as List;
     final primaryEmails = emailsData.cast<Map<String, dynamic>>().where(
-          (email) => email['primary'] == true && email['verified'] == true,
-        );
+      (email) => email['primary'] == true && email['verified'] == true,
+    );
     final primaryEmail = primaryEmails.isNotEmpty ? primaryEmails.first : null;
 
     return primaryEmail?['email'] as String?;

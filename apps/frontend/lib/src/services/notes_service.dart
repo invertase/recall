@@ -1,31 +1,28 @@
 import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/src/config/environment.dart';
-import 'package:frontend/src/services/auth_service.dart';
-import 'package:http/http.dart';
+import 'package:frontend/src/services/authenticated_client.dart';
+import 'package:http/http.dart' as http;
 import 'package:common/common.dart';
 
 final notesServiceProvider = Provider<NotesService>((ref) {
-  final authService = ref.watch(authServiceProvider);
-  return NotesService(authService: authService, http: Client());
+  final authClient = ref.watch(authClientProvider);
+
+  return NotesService(http: authClient);
 });
 
 class NotesService {
-  const NotesService({required AuthService authService, required Client http})
-    : _authService = authService,
-      _http = http;
+  const NotesService({required http.Client http}) : _http = http;
 
-  final AuthService _authService;
-  final Client _http;
+  final http.Client _http;
 
-  String get _baseUrl => Environment.baseUrl;
+  String get _baseUrl => Environment.apiUrl;
 
   Future<List<Note>> getNotes() async {
     try {
-      final headers = _authService.getAuthHeaders();
       final response = await _http.get(
         Uri.parse('$_baseUrl/api/notes'),
-        headers: headers,
+        headers: {'Content-Type': 'application/json'},
       );
 
       if (response.statusCode == 200) {
@@ -47,10 +44,9 @@ class NotesService {
     required String content,
   }) async {
     try {
-      final headers = _authService.getAuthHeaders();
       final response = await _http.post(
         Uri.parse('$_baseUrl/api/notes'),
-        headers: headers,
+        headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'title': title, 'content': content}),
       );
 
@@ -70,10 +66,9 @@ class NotesService {
 
   Future<Note> getNote(String id) async {
     try {
-      final headers = _authService.getAuthHeaders();
       final response = await _http.get(
         Uri.parse('$_baseUrl/api/notes/$id'),
-        headers: headers,
+        headers: {'Content-Type': 'application/json'},
       );
 
       if (response.statusCode == 200) {
@@ -94,40 +89,30 @@ class NotesService {
     String? title,
     String? content,
   }) async {
-    try {
-      final headers = _authService.getAuthHeaders();
-      final body = <String, dynamic>{};
-      if (title != null) body['title'] = title;
-      if (content != null) body['content'] = content;
+    final body = <String, dynamic>{};
+    if (title != null) body['title'] = title;
+    if (content != null) body['content'] = content;
 
-      final response = await _http.patch(
-        Uri.parse('$_baseUrl/api/notes/$id'),
-        headers: headers,
-        body: jsonEncode(body),
-      );
+    final response = await _http.patch(
+      Uri.parse('$_baseUrl/api/notes/$id'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(body),
+    );
 
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body) as Map<String, dynamic>;
-        if (data['success'] == true) {
-          return Note.fromMap(data['data']);
-        }
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+      if (data['success'] == true) {
+        return Note.fromMap(data['data']);
       }
-      print(response.body);
-      print(response.statusCode);
-      throw Exception('Failed to update note: ${response.body}');
-    } catch (e, st) {
-      print(st);
-      print(e);
-      throw Exception('Failed to update note: $e');
     }
+    throw Exception('Failed to update note: ${response.body}');
   }
 
   Future<void> deleteNote(String id) async {
     try {
-      final headers = _authService.getAuthHeaders();
       final response = await _http.delete(
         Uri.parse('$_baseUrl/api/notes/$id'),
-        headers: headers,
+        headers: {'Content-Type': 'application/json'},
       );
 
       if (response.statusCode != 200) {

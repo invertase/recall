@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:common/common.dart';
 import 'package:frontend/src/services/auth_service.dart';
+import 'package:frontend/src/services/user_service.dart';
 
 final authStateProvider = AsyncNotifierProvider<AuthNotifier, User?>(
   AuthNotifier.new,
@@ -9,12 +10,14 @@ final authStateProvider = AsyncNotifierProvider<AuthNotifier, User?>(
 class AuthNotifier extends AsyncNotifier<User?> {
   @override
   Future<User?> build() async {
-    final authService = ref.watch(authServiceProvider);
+    final authService = ref.read(authServiceProvider);
+    final userService = ref.watch(userServiceProvider);
+
     final token = authService.getToken();
 
     if (token == null) return null;
 
-    return await authService.getMyProfile();
+    return await userService.getMyProfile();
   }
 
   Future<void> signInWithGoogle() async {
@@ -33,9 +36,10 @@ class AuthNotifier extends AsyncNotifier<User?> {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
       final authService = ref.read(authServiceProvider);
+      final userService = ref.watch(userServiceProvider);
 
       authService.saveToken(token);
-      return await authService.getMyProfile();
+      return await userService.getMyProfile();
     });
   }
 
