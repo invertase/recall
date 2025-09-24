@@ -1,8 +1,10 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/src/shared/extensions/responsivex.dart';
 import 'package:frontend/src/shared/theme/app_colors.dart';
 import 'package:frontend/src/shared/theme/theme_data.dart';
 import 'package:frontend/src/shared/widgets/app_checkbox.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TermsAndConditions extends StatelessWidget {
   const TermsAndConditions({
@@ -36,17 +38,25 @@ class TermsAndConditions extends StatelessWidget {
                     ? colorScheme.onSurface
                     : AppColors.colourBlack,
               ),
-              const TextSpan(
+              TextSpan(
                 children: [
                   TextSpan(text: "By signing in, I agree to Globe's\n"),
                   TextSpan(
                     text: 'Terms of Service',
                     style: TextStyle(decoration: TextDecoration.underline),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () => _launchUrl(
+                        'https://github.com/invertase/recall/blob/main/TERMS_OF_SERVICE.md',
+                      ),
                   ),
                   TextSpan(text: ' and '),
                   TextSpan(
                     text: 'Privacy Policy',
                     style: TextStyle(decoration: TextDecoration.underline),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () => _launchUrl(
+                        'https://github.com/invertase/recall/blob/main/PRIVACY_POLICY.md',
+                      ),
                   ),
                 ],
               ),
@@ -55,5 +65,12 @@ class TermsAndConditions extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Future<void> _launchUrl(String url) async {
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    }
   }
 }

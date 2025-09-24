@@ -6,6 +6,7 @@ import 'package:frontend/src/shared/widgets/recall_logo.dart';
 import 'package:frontend/src/presentation/notes/widgets/large_button.dart';
 import 'package:frontend/src/presentation/notes/widgets/my_notes_section.dart';
 import 'package:frontend/src/providers/selected_note_provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NoteSidebar extends ConsumerWidget {
   const NoteSidebar({super.key});
@@ -35,13 +36,15 @@ class NoteSidebar extends ConsumerWidget {
           LargeButton(
             text: 'Go to Repository',
             icon: AppIcon.link(),
-            onPressed: () {},
+            onPressed: () => _launchUrl('https://github.com/invertase/recall'),
           ),
           const SizedBox(height: 12),
           LargeButton(
             text: 'Terms and Privacy',
             icon: AppIcon.link(),
-            onPressed: () {},
+            onPressed: () => _launchUrl(
+              'https://github.com/invertase/recall/blob/main/TERMS_OF_SERVICE.md',
+            ),
           ),
         ],
       ),
@@ -50,5 +53,12 @@ class NoteSidebar extends ConsumerWidget {
 
   void _createNewNote(WidgetRef ref) {
     ref.read(selectedNoteProvider.notifier).selectNote(null);
+  }
+
+  Future<void> _launchUrl(String url) async {
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    }
   }
 }
