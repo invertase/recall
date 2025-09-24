@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:frontend/src/shared/theme/theme_data.dart';
 import 'package:frontend/src/presentation/notes/widgets/action_buttons.dart';
