@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/src/presentation/notes/widgets/delete_confirmation_dialog.dart';
 import 'package:frontend/src/presentation/notes/widgets/mobile_note_text_editor.dart';
+import 'package:frontend/src/presentation/notes/widgets/notes_app_bar.dart';
+import 'package:frontend/src/shared/widgets/app_button.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/src/shared/theme/theme_data.dart';
-import 'package:frontend/src/shared/widgets/action_button.dart';
 import 'package:frontend/src/shared/widgets/app_icon.dart';
-import 'package:frontend/src/shared/widgets/recall_logo.dart';
-import 'package:frontend/src/presentation/notes/widgets/note_menu.dart';
 import 'package:frontend/src/presentation/notes/widgets/title_section.dart';
 import 'package:frontend/src/providers/selected_note_provider.dart';
 import 'package:frontend/src/providers/note_mutations.dart';
-import 'package:frontend/src/providers/auth_provider.dart';
-import 'package:frontend/src/providers/theme_provider.dart';
 import 'package:frontend/src/shared/utils/snackbar_utils.dart';
 import 'package:frontend/src/shared/utils/note_validation.dart';
 import 'package:riverpod/experimental/mutation.dart';
@@ -48,10 +46,7 @@ class _MobileNoteEditorPageState extends ConsumerState<MobileNoteEditorPage> {
     ref.listen<MutationState<dynamic>>(saveNote, (previous, next) {
       switch (next) {
         case MutationSuccess():
-          final message = isNewNote
-              ? 'Note created successfully!'
-              : 'Note updated successfully!';
-          SnackbarUtils.showSuccess(context, message);
+          SnackbarUtils.showSuccess(context, 'Note saved successfully');
         case MutationError():
           String message;
           if (next.error is NoteValidationException) {
@@ -83,32 +78,7 @@ class _MobileNoteEditorPageState extends ConsumerState<MobileNoteEditorPage> {
 
     return Scaffold(
       backgroundColor: colorScheme.background,
-      appBar: AppBar(
-        backgroundColor: colorScheme.background,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => context.pop(),
-        ),
-        title: const RecallLogo(),
-        actions: [
-          IconButton(
-            icon: AppIcon.burgerMenu(size: 16),
-            onPressed: () {
-              NoteMenu.show(
-                context,
-                onThemeToggle: ref
-                    .read(themeModeNotifierProvider.notifier)
-                    .toggle,
-                onSignOut: () async {
-                  await ref.read(authStateProvider.notifier).signOut();
-                },
-                topOffset: kToolbarHeight,
-              );
-            },
-          ),
-        ],
-      ),
+      appBar: NotesAppBar(showBottom: false),
       body: ListView(
         padding: const EdgeInsets.all(24),
         children: [
@@ -128,37 +98,52 @@ class _MobileNoteEditorPageState extends ConsumerState<MobileNoteEditorPage> {
           ),
           const SizedBox(height: 24),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 56),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+            padding: const EdgeInsets.symmetric(horizontal: 0),
+            child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                ActionButton(
-                  text: 'Save',
-                  icon: AppIcon.save(),
-                  onPressed: saveState is MutationPending
-                      ? null
-                      : () async {
-                          await executeSaveNote(ref);
-                          if (context.mounted) {
-                            context.pop();
-                          }
-                        },
-                ),
-                if (!isNewNote) ...[
-                  const SizedBox(height: 12),
-                  ActionButton(
-                    text: 'Delete Note',
-                    icon: AppIcon.delete(),
-                    onPressed: deleteState is MutationPending
+                Expanded(
+                  child: AppButton(
+                    text: 'Save',
+                    icon: AppIcon.save(),
+                    onPressed: saveState is MutationPending
                         ? null
                         : () async {
-                            await executeDeleteNote(ref, selectedNote.id!);
+                            await executeSaveNote(ref);
                             if (context.mounted) {
                               context.pop();
                             }
                           },
-                    isDestructive: true,
+                  ),
+                ),
+                if (!isNewNote) ...[
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: AppButton(
+                      text: 'Delete Note',
+                      icon: AppIcon.delete(),
+                      // onPressed: deleteState is MutationPending
+                      //     ? null
+                      //     : () async {
+                      //         await executeDeleteNote(ref, selectedNote.id!);
+                      //         if (context.mounted) {
+                      //           context.pop();
+                      //         }
+                      //       },
+                      onPressed: deleteState is MutationPending
+                          ? null
+                          : () => DeleteConfirmationDialog.show(
+                              context,
+                              onDeleteClicked: switch (deleteState) {
+                                MutationPending() => null,
+                                _ => () => executeDeleteNote(
+                                  ref,
+                                  selectedNote.id!,
+                                ),
+                              },
+                            ),
+                      isDestructive: true,
+                    ),
                   ),
                 ],
               ],

@@ -47,13 +47,13 @@ class SignInCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           const RecallLogo(),
-          AppButtton(
+          AppButton(
             onPressed: onSignInWithGoogle,
             text: 'Sign in with Google',
             icon: AppIcon.google(size: 16),
           ),
           const SizedBox(height: 12),
-          AppButtton(
+          AppButton(
             onPressed: onSignInWithGitHub,
             text: 'Sign in with GitHub',
             icon: AppIcon.github(size: 16),

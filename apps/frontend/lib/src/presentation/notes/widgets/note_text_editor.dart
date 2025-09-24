@@ -125,15 +125,6 @@ class _NoteTextEditorState extends State<NoteTextEditor> {
                   null,
                 ),
               ),
-              customShortcuts: {
-                const SingleActivator(LogicalKeyboardKey.backspace):
-                    const BackspaceListIntent(),
-              },
-
-              // ✅ Map the Intent to your new Action
-              customActions: {
-                BackspaceListIntent: BackspaceListAction(_controller),
-              },
             ),
           ),
         ),
@@ -150,57 +141,4 @@ class _NoteTextEditorState extends State<NoteTextEditor> {
   }
 
   QuillController get controller => _controller;
-}
-
-// 1. Define an Intent: A command that can be invoked by a shortcut.
-class BackspaceListIntent extends Intent {
-  const BackspaceListIntent();
-}
-
-// 2. Define an Action: The logic that executes when the Intent is invoked.
-class BackspaceListAction extends Action<BackspaceListIntent> {
-  BackspaceListAction(this.controller);
-
-  final QuillController controller;
-
-  @override
-  Object? invoke(BackspaceListIntent intent) {
-    final selection = controller.selection;
-
-    // Check if the cursor is not selecting a range of text
-    if (!selection.isCollapsed) {
-      // Let the default action handle range deletion
-      return null;
-    }
-
-    final plainText = controller.document.toPlainText();
-    final lineStartOffset =
-        plainText.lastIndexOf('\n', selection.start - 1) + 1;
-
-    // Check if the cursor is at the very beginning of the line
-    if (selection.start != lineStartOffset) {
-      // Not at the start of a line, let the default action handle it
-      return null;
-    }
-
-    final style = controller.getSelectionStyle();
-    final isList =
-        style.containsKey(Attribute.ul.key) ||
-        style.containsKey(Attribute.ol.key);
-    print(isList);
-    if (isList) {
-      // It IS an empty list item, so we handle it.
-      Attribute? listAttribute = style.containsKey(Attribute.ul.key)
-          ? Attribute.ul
-          : Attribute.ol;
-      controller.formatSelection(Attribute.clone(listAttribute, null));
-    } else {
-      // It's NOT a list item, so we need to let the default action run.
-      // Returning null allows the event to bubble up to the next handler.
-      return null;
-    }
-
-    // We handled it, so return non-null to stop the event from bubbling.
-    return true;
-  }
 }

@@ -21,7 +21,6 @@ Future<void> executeSaveNote(MutationTarget ref) async {
     final isNewNote = selectedNote.id == null;
 
     if (isNewNote) {
-      print('Creating new note');
       final result = await notesService.createNote(
         title: selectedNote.title.trim(),
         content: selectedNote.content.trim(),
@@ -31,9 +30,6 @@ Future<void> executeSaveNote(MutationTarget ref) async {
       tsx.get(notesProvider.notifier).addNote(result);
       return result;
     } else {
-      print(selectedNote.id);
-      print(selectedNote.title);
-      print(selectedNote.content);
       final updatedNote = await notesService.updateNote(
         id: selectedNote.id!,
         title: selectedNote.title.trim(),

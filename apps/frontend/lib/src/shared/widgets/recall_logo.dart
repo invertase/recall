@@ -12,7 +12,7 @@ class RecallLogo extends StatelessWidget {
 
     return Row(
       children: [
-        AppIcon.recall(size: 30),
+        AppIcon.recall(size: 34),
         Text(
           'Recall',
           style: GoogleFonts.outfit(

@@ -23,10 +23,20 @@ class AccountDropdown extends ConsumerWidget {
     return PopupMenuButton<String>(
       itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
         PopupMenuItem<String>(
+          height: 24,
           value: 'signOut',
-          child: const ListTile(
-            leading: Icon(Icons.exit_to_app),
-            title: Text('Sign Out'),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Row(
+              children: [
+                Icon(Icons.logout, size: 16),
+                SizedBox(width: 16),
+                Text(
+                  'Sign Out',
+                  style: textTheme.body?.copyWith(color: colorScheme.onSurface),
+                ),
+              ],
+            ),
           ),
           onTap: () => ref.read(authStateProvider.notifier).signOut(),
         ),

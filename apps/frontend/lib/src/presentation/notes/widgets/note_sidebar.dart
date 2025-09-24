@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/src/shared/theme/theme_data.dart';
 import 'package:frontend/src/shared/widgets/app_icon.dart';
 import 'package:frontend/src/shared/widgets/recall_logo.dart';
-import 'package:frontend/src/presentation/notes/widgets/new_note_button.dart';
+import 'package:frontend/src/presentation/notes/widgets/large_button.dart';
 import 'package:frontend/src/presentation/notes/widgets/my_notes_section.dart';
 import 'package:frontend/src/providers/selected_note_provider.dart';
 

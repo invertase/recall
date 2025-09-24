@@ -27,7 +27,6 @@ class ActionButton extends StatelessWidget {
         side: BorderSide(
           color: isDestructive ? colorScheme.error : colorScheme.primary,
         ),
-        foregroundColor: colorScheme.onSurface,
         fixedSize: const Size(double.infinity, 40),
       ),
       onPressed: onPressed,

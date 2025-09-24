@@ -82,6 +82,7 @@ class NoteMenu extends StatelessWidget {
             NoteMenuOption(
               title: 'Theme',
               icon: ThemeToggle(onThemeToggle: onThemeToggle),
+              onTap: onThemeToggle,
             ),
           ],
         ),
@@ -111,7 +112,7 @@ class NoteMenuOption extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(color: colorScheme.surface),
-        padding: const EdgeInsets.symmetric(vertical: 40),
+        padding: const EdgeInsets.symmetric(vertical: 24),
         width: double.infinity,
         alignment: Alignment.center,
         child: Row(

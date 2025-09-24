@@ -31,6 +31,7 @@ class TermsAndConditions extends StatelessWidget {
             Text.rich(
               textAlign: context.isMobile ? TextAlign.left : TextAlign.center,
               style: textTheme.smallBody?.copyWith(
+                fontSize: 12,
                 color: context.isMobile
                     ? colorScheme.onSurface
                     : AppColors.colourBlack,

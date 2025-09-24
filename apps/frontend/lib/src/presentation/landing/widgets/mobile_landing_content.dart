@@ -22,27 +22,31 @@ class MobileLandingContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const RecallLogo(),
-          AppButtton(
-            onPressed: onSignInWithGoogle,
-            text: 'Sign in with Google',
-            icon: AppIcon.google(size: 16),
-          ),
-          SizedBox(height: context.isMobile ? 18 : 12),
-          AppButtton(
-            onPressed: onSignInWithGitHub,
-            text: 'Sign in with GitHub',
-            icon: AppIcon.github(size: 16),
-          ),
-          SizedBox(height: context.isMobile ? 18 : 16),
-          TermsAndConditions(
-            onCheckboxChanged: onTermsAndConditionsChanged,
-            value: termsAndConditionsChecked,
-          ),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const RecallLogo(),
+            AppButton(
+              onPressed: onSignInWithGoogle,
+              text: 'Sign in with Google',
+              icon: AppIcon.google(size: 16),
+            ),
+            SizedBox(height: context.isMobile ? 18 : 12),
+            AppButton(
+              onPressed: onSignInWithGitHub,
+              text: 'Sign in with GitHub',
+              icon: AppIcon.github(size: 16),
+            ),
+            SizedBox(height: context.isMobile ? 18 : 16),
+            TermsAndConditions(
+              onCheckboxChanged: onTermsAndConditionsChanged,
+              value: termsAndConditionsChecked,
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/src/presentation/landing/pages/landing_page.dart';
+import 'package:frontend/src/presentation/notes/pages/mobile_note_editor_page.dart';
+import 'package:frontend/src/presentation/notes/pages/note_page.dart';
+import 'package:frontend/src/providers/auth_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../presentation/landing/pages/landing_page.dart';
-import '../../presentation/notes/pages/note_page.dart';
-import '../../presentation/notes/pages/mobile_notes_list_page.dart';
-import '../../presentation/notes/pages/mobile_note_editor_page.dart';
-import '../../providers/auth_provider.dart';
 
 class AppRouter {
   static GoRouter createRouter(WidgetRef ref) {
@@ -13,29 +12,18 @@ class AppRouter {
       initialLocation: '/',
       refreshListenable: _AuthNotifier(ref),
       routes: [
-        GoRoute(
-          path: '/',
-          builder: (context, state) {
-            return const LandingPage();
-          },
-        ),
+        GoRoute(path: '/', builder: (context, state) => const LandingPage()),
         GoRoute(
           path: '/notes',
-          builder: (context, state) {
-            return const NotePage();
-          },
-        ),
-        GoRoute(
-          path: '/mobile-notes-list',
-          builder: (context, state) {
-            return const MobileNotesListPage();
-          },
-        ),
-        GoRoute(
-          path: '/mobile-note-editor',
-          builder: (context, state) {
-            return const MobileNoteEditorPage();
-          },
+          builder: (context, state) => const NotePage(),
+          routes: [
+            GoRoute(
+              path: 'edit',
+              builder: (context, state) {
+                return const MobileNoteEditorPage();
+              },
+            ),
+          ],
         ),
       ],
       redirect: (context, state) {

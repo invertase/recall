@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:frontend/src/presentation/notes/widgets/delete_confirmation_dialog.dart';
 import 'package:riverpod/experimental/mutation.dart';
 import 'package:frontend/src/shared/widgets/action_button.dart';
 import 'package:frontend/src/shared/widgets/app_icon.dart';
@@ -71,10 +72,13 @@ class ActionButtons extends ConsumerWidget {
           ActionButton(
             text: 'Delete',
             icon: AppIcon.delete(),
-            onPressed: switch (deleteState) {
-              MutationPending() => null,
-              _ => () => executeDeleteNote(ref, selectedNote.id!),
-            },
+            onPressed: () => DeleteConfirmationDialog.show(
+              context,
+              onDeleteClicked: switch (deleteState) {
+                MutationPending() => null,
+                _ => () => executeDeleteNote(ref, selectedNote.id!),
+              },
+            ),
             isDestructive: true,
           ),
       ],

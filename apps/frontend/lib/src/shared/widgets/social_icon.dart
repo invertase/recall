@@ -12,18 +12,20 @@ class SocialIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = GlobeTheme.of(context).colorScheme;
 
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        width: 40,
-        height: 40,
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: colorScheme.background,
-          border: Border.all(color: colorScheme.outline),
-          borderRadius: BorderRadius.circular(8),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(8),
+      child: InkWell(
+        onTap: onTap,
+        child: Container(
+          width: 40,
+          height: 40,
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            border: Border.all(color: colorScheme.outline),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: icon,
         ),
-        child: icon,
       ),
     );
   }

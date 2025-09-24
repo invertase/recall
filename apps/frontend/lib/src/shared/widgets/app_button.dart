@@ -2,12 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:frontend/src/shared/extensions/responsivex.dart';
 import 'package:frontend/src/shared/theme/theme_data.dart';
 
-class AppButtton extends StatelessWidget {
-  const AppButtton({super.key, this.onPressed, required this.text, this.icon});
+class AppButton extends StatelessWidget {
+  const AppButton({
+    super.key,
+    this.onPressed,
+    required this.text,
+    this.icon,
+    this.isDestructive = false,
+  });
 
   final String text;
   final Widget? icon;
   final void Function()? onPressed;
+  final bool isDestructive;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +34,9 @@ class AppButtton extends StatelessWidget {
         shadowColor: Colors.transparent,
         foregroundColor: colorScheme.secondary,
         elevation: 0,
-        side: BorderSide(color: colorScheme.outline),
+        side: BorderSide(
+          color: isDestructive ? colorScheme.error : colorScheme.primary,
+        ),
         iconAlignment: IconAlignment.end,
       ),
       label: Text(text, style: textTheme.body),
