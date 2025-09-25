@@ -139,10 +139,10 @@ We may retain certain information for longer periods as required by law or for l
 - You can edit or delete your notes at any time
 - You can request correction of inaccurate information
 
-### 7.3 Deletion
+### 7.3 Data Requests
 - You can delete individual notes at any time
-- You can close your account and request deletion of all associated data
-- We will honor deletion requests within 30 days
+- You can request deletion of your account and associated data by contacting us
+- We will process data deletion requests as appropriate
 
 ### 7.4 Communication Preferences
 - You can opt out of non-essential communications
@@ -150,10 +150,7 @@ We may retain certain information for longer periods as required by law or for l
 
 ## 8. International Data Transfers
 
-Your information may be transferred to and processed in countries other than your own. We ensure appropriate safeguards are in place for such transfers, including:
-- Standard contractual clauses
-- Adequacy decisions by relevant authorities
-- Other appropriate transfer mechanisms
+Your information may be transferred to and processed in countries other than your own. We implement appropriate safeguards to protect your data during such transfers.
 
 ## 9. Children's Privacy
 
@@ -205,34 +202,16 @@ Electra Way
 Crewe, Cheshire
 England, CW1 6ZF
 
-## 14. Regional Privacy Rights
+## 14. Your Privacy Rights
 
-### 14.1 European Union (GDPR)
-If you are in the EU, you have additional rights under the General Data Protection Regulation:
-- Right to rectification
-- Right to erasure ("right to be forgotten")
-- Right to restrict processing
-- Right to data portability
-- Right to object to processing
-- Rights related to automated decision-making
+You have the right to:
+- Access your personal information
+- Request correction of inaccurate information
+- Request deletion of your account and data
+- Object to certain processing of your information
+- Request data portability
 
-### 14.2 California (CCPA)
-If you are a California resident, you have rights under the California Consumer Privacy Act:
-- Right to know what personal information is collected
-- Right to delete personal information
-- Right to opt-out of the sale of personal information
-- Right to non-discrimination
-
-### 14.3 Other Jurisdictions
-We comply with applicable privacy laws in all jurisdictions where we operate.
-
-## 15. Data Processing Legal Basis
-
-For EU users, we process your personal information based on:
-- **Consent:** When you create an account and use our Service
-- **Contract Performance:** To provide the Service you have requested
-- **Legitimate Interests:** To improve our Service and ensure security
-- **Legal Obligation:** To comply with applicable laws
+To exercise these rights, please contact us at [contact@globe.dev](mailto:contact@globe.dev).
 
 ---
 
