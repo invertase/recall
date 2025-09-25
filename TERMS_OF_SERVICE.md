@@ -32,7 +32,7 @@ Recall is a full-stack notes application built with Dart and Flutter that allows
 - We are not liable for any loss or damage arising from your failure to protect your account
 
 ### 3.3 Account Termination
-- You may terminate your account at any time by contacting us
+- You may request account termination by contacting us
 - We may terminate or suspend your account immediately, without prior notice, for conduct that we believe violates these Terms or is harmful to other users, us, or third parties
 
 ## 4. User Content and Data
