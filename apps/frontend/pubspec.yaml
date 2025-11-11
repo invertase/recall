@@ -7,9 +7,10 @@ version: 1.0.0+1
 environment:
   sdk: ^3.9.0
 
+resolution: workspace
+
 dependencies:
   common:
-    path: ../../packages/common
   dart_mappable: ^4.6.0
   flutter:
     sdk: flutter
